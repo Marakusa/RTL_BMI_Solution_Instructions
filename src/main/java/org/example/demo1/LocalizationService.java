@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class LocalizationService {
 
+    private static final System.Logger LOGGER = System.getLogger(LocalizationService.class.getName());
+
     private static final String DB_NAME = "bmi_localization";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "Test12";
@@ -45,8 +47,7 @@ public class LocalizationService {
             }
             System.out.println("✅ Loaded localization strings for language: " + lang + " from " + dbUrl);
         } catch (SQLException e) {
-            System.err.println("❌ Database connection failed: " + dbUrl);
-            e.printStackTrace();
+            LOGGER.log(System.Logger.Level.ERROR, () -> "Database connection failed: " + dbUrl, e);
         }
 
         return strings;

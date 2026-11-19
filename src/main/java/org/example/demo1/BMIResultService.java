@@ -7,6 +7,8 @@ import java.sql.SQLException;
 
 public class BMIResultService {
 
+    private static final System.Logger LOGGER = System.getLogger(BMIResultService.class.getName());
+
     // Environment variables with Docker-friendly defaults
     private static final String DB_HOST =
             System.getenv().getOrDefault("DB_HOST", "db");
@@ -32,8 +34,7 @@ public class BMIResultService {
             // Ensure MySQL driver loads properly
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            System.err.println("❌ MySQL JDBC Driver not found.");
-            e.printStackTrace();
+            LOGGER.log(System.Logger.Level.ERROR, "MySQL JDBC Driver not found.", e);
         }
     }
 
@@ -56,10 +57,8 @@ public class BMIResultService {
             System.out.println("✅ BMI result saved successfully.");
 
         } catch (SQLException e) {
-            System.err.println("❌ Database connection failed.");
-            System.err.println("URL: " + DB_URL);
-            System.err.println("User: " + DB_USER);
-            e.printStackTrace();
+            LOGGER.log(System.Logger.Level.ERROR,
+                    () -> "Database connection failed. URL: " + DB_URL + ", user: " + DB_USER, e);
         }
     }
 }
