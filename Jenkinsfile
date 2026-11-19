@@ -10,7 +10,7 @@ pipeline {
         PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Users\\skype\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin;${env.PATH}"
         JAVA_HOME = 'C:\\Program Files\\Java\\jdk-21'
         SONARQUBE_SERVER = 'SonarQubeServer'
-        DOCKERHUB_CREDENTIALS_ID = 'Docker_Hub'
+        DOCKERHUB_CREDENTIALS_ID = 'dockerhub'
         // Docker Hub repository names must be lowercase
         DOCKERHUB_REPO = 'marakusa/bmi_3013_markus'
         DOCKER_IMAGE_TAG = 'latest'
@@ -28,7 +28,7 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
+                withCredentials([string(credentialsId: 'sonartoken', variable: 'SONAR_TOKEN')]) {
                     withSonarQubeEnv("${env.SONARQUBE_SERVER}") {
                         // Project key, sources, tests and coverage paths come from sonar-project.properties
                         bat """
