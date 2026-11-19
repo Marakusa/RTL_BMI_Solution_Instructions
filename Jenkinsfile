@@ -10,7 +10,7 @@ pipeline {
         PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Users\\skype\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin;${env.PATH}"
         JAVA_HOME = 'C:\\Program Files\\Java\\jdk-21'
         SONARQUBE_SERVER = 'SonarQubeServer'
-        DOCKERHUB_CREDENTIALS_ID = 'dockerhub'
+        DOCKERHUB_CREDENTIALS_ID = 'dockerhub-credentials'
         // Docker Hub repository names must be lowercase
         DOCKERHUB_REPO = 'marakusa/bmi_3013_markus'
         DOCKER_IMAGE_TAG = 'latest'
