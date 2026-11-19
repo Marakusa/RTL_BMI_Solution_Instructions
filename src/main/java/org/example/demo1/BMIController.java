@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
-import java.text.DecimalFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -135,10 +134,9 @@ private Label welcomeText;
         try {
             // ✅ use the active locale
             double weight = Double.parseDouble(tfWeight.getText());
-            double height = Double.parseDouble(tfHeight.getText()) / 100.0;
-            double bmi = weight / (height * height);
-            DecimalFormat df = new DecimalFormat("#0.00");
-            lblResult.setText(localizedStrings.getOrDefault("result", "Your BMI is") + " " + df.format(bmi));
+            double height = BMICalculator.centimetresToMetres(Double.parseDouble(tfHeight.getText()));
+            double bmi = BMICalculator.calculate(weight, height);
+            lblResult.setText(localizedStrings.getOrDefault("result", "Your BMI is") + " " + BMICalculator.format(bmi));
 
             // Save to database
             String language = currentLocale.getLanguage();  // or store current locale
@@ -181,8 +179,7 @@ private Label welcomeText;
 
 
     private void applyTextDirection(Locale locale) {
-        String lang = locale.getLanguage();
-        boolean isRTL = lang.equals("fa") || lang.equals("ur") || lang.equals("ar") || lang.equals("he");
+        boolean isRTL = BMICalculator.isRightToLeft(locale);
 
         Platform.runLater(() -> {
             if (rootVBox != null) {
