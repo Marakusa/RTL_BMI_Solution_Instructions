@@ -128,6 +128,37 @@
                 </executions>
             </plugin>
 
+            <!-- Copies dependency jars to target/libs for sonar.java.libraries / sonar.java.test.libraries -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.8.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-main-libs</id>
+                        <phase>process-test-classes</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeScope>runtime</includeScope>
+                            <outputDirectory>${project.build.directory}/libs/main</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-test-libs</id>
+                        <phase>process-test-classes</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeScope>test</includeScope>
+                            <outputDirectory>${project.build.directory}/libs/test</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- Shade Plugin to create an Uber JAR -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
